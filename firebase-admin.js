@@ -8,6 +8,7 @@ import {
   query,
   serverTimestamp,
   updateDoc
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -149,3 +150,53 @@ document.addEventListener("DOMContentLoaded", () => {
     adminLogin.reset();
   });
 });
+const addAnnouncementBtn = document.querySelector("#addAnnouncement");
+
+if (addAnnouncementBtn) {
+  addAnnouncementBtn.addEventListener("click", async () => {
+    const text = document.querySelector("#announcementText").value.trim();
+
+    if (!text) {
+      alert("Enter announcement first");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "announcements"), {
+        text: text,
+        createdAt: serverTimestamp()
+      });
+
+      document.querySelector("#announcementText").value = "";
+      alert("Announcement Saved Successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Error saving announcement");
+    }
+  });
+  
+}const addAnnouncementBtn = document.querySelector("#addAnnouncement");
+
+if (addAnnouncementBtn) {
+  addAnnouncementBtn.addEventListener("click", async () => {
+    const text = document.querySelector("#announcementText").value.trim();
+
+    if (!text) {
+      alert("Enter announcement first");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "announcements"), {
+        text: text,
+        createdAt: serverTimestamp()
+      });
+
+      document.querySelector("#announcementText").value = "";
+      alert("Announcement Saved Successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Error saving announcement");
+    }
+  });
+}
