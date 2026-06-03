@@ -1,0 +1,151 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import {
+  collection,
+  doc,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+  serverTimestamp,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { firebaseConfig } from "./firebase-config.js";
+
+const adminPassword = "tanish#satyam777";
+const admins = ["Tanish Chechediya", "Satyam Chechediya"];
+
+function hasFirebaseConfig() {
+  return Object.values(firebaseConfig).every((value) => value && !value.startsWith("YOUR_"));
+}
+
+function createRequestCard(request, onStatusChange) {
+  const status = request.status || "Pending";
+  const card = document.createElement("article");
+  card.className = "booking-card admin-request-card";
+  card.innerHTML = `
+    <div class="booking-card-head">
+      <h3>${request.name || "Unnamed Devotee"}</h3>
+      <span class="status-pill status-${status.toLowerCase()}">${status}</span>
+    </div>
+    <p><strong>Mobile Number:</strong> ${request.mobileNumber || "-"}</p>
+    <p><strong>Option 1 Date:</strong> ${request.option1Date || "-"}</p>
+    <p><strong>Option 1 Time:</strong> ${request.option1Time || "-"}</p>
+    <p><strong>Option 2 Date:</strong> ${request.option2Date || "-"}</p>
+    <p><strong>Option 2 Time:</strong> ${request.option2Time || "-"}</p>
+    <div class="admin-actions">
+      <button class="btn btn-approve" type="button" data-status="Approved">Approve</button>
+      <button class="btn btn-reject" type="button" data-status="Rejected">Reject</button>
+    </div>
+  `;
+
+  card.querySelectorAll("[data-status]").forEach((button) => {
+    button.addEventListener("click", () => onStatusChange(request.id, button.dataset.status, card));
+  });
+
+  return card;
+}
+
+function renderRequests(container, requests, onStatusChange) {
+  container.innerHTML = "";
+
+  if (!requests.length) {
+    const empty = document.createElement("p");
+    empty.className = "form-message";
+    empty.textContent = "No booking requests found.";
+    container.appendChild(empty);
+    return;
+  }
+
+  requests.forEach((request) => {
+    container.appendChild(createRequestCard(request, onStatusChange));
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const adminLogin = document.querySelector("#adminLogin");
+  const loginPanel = document.querySelector("#loginPanel");
+  const adminPanel = document.querySelector("#adminPanel");
+  const adminBookings = document.querySelector("#adminBookings");
+  const adminMessage = document.querySelector("#adminMessage");
+  const logoutAdmin = document.querySelector("#logoutAdmin");
+
+  if (!adminLogin || !adminPanel || !adminBookings || !adminMessage) return;
+
+  let db = null;
+  if (hasFirebaseConfig()) {
+    const app = initializeApp(firebaseConfig);
+    db = getFirestore(app);
+  }
+
+  async function updateRequestStatus(requestId, status, card) {
+    if (!db) return;
+
+    card.querySelectorAll("button").forEach((button) => {
+      button.disabled = true;
+    });
+    adminMessage.textContent = `Updating status to ${status}...`;
+
+    try {
+      await updateDoc(doc(db, "aarti_requests", requestId), {
+        status,
+        updatedAt: serverTimestamp()
+      });
+      adminMessage.textContent = `Status updated to ${status}.`;
+      await loadRequests();
+    } catch (error) {
+      adminMessage.textContent = "Unable to update status. Please try again.";
+      card.querySelectorAll("button").forEach((button) => {
+        button.disabled = false;
+      });
+      console.error("Firestore admin update error:", error);
+    }
+  }
+
+  async function loadRequests() {
+    if (!db) {
+      adminMessage.textContent = "Firebase config is missing. Please update firebase-config.js.";
+      return;
+    }
+
+    adminMessage.textContent = "Loading booking requests...";
+
+    try {
+      const requestsQuery = query(collection(db, "aarti_requests"), orderBy("createdAt", "desc"));
+      const snapshot = await getDocs(requestsQuery);
+      const requests = snapshot.docs.map((requestDoc) => ({
+        id: requestDoc.id,
+        ...requestDoc.data()
+      }));
+
+      renderRequests(adminBookings, requests, updateRequestStatus);
+      adminMessage.textContent = "";
+    } catch (error) {
+      adminMessage.textContent = "Unable to load booking requests. Please check Firebase permissions.";
+      console.error("Firestore admin load error:", error);
+    }
+  }
+
+  adminLogin.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const selectedAdmin = document.querySelector("#adminName").value;
+    const password = document.querySelector("#adminPassword").value;
+
+    if (!admins.includes(selectedAdmin) || password !== adminPassword) {
+      alert("Invalid admin login details.");
+      return;
+    }
+
+    loginPanel.classList.add("hidden");
+    adminPanel.classList.remove("hidden");
+    await loadRequests();
+  });
+
+  logoutAdmin.addEventListener("click", () => {
+    adminPanel.classList.add("hidden");
+    loginPanel.classList.remove("hidden");
+    adminBookings.innerHTML = "";
+    adminMessage.textContent = "";
+    adminLogin.reset();
+  });
+});

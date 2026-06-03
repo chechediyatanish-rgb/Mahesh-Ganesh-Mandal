@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aarti Booking | MAHESH GANESH MANDAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a class="brand" href="index.html"><img class="logo-mark" src="assets/mahesh-ganesh-mandal-logo.webp" alt="Mahesh Ganesh Mandal logo"><span><strong>MAHESH GANESH MANDAL</strong><small>Selu</small></span></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a><a href="about.html">About Mandal</a><a href="committee.html">Committee Members</a><a href="events.html">Latest Events</a><a href="booking.html" class="active">Aarti Booking</a><a href="status.html">Booking Status</a><a href="admin.html">Admin Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="page-title">
+      <p class="eyebrow">Aarti Booking</p>
+      <h1>Reserve Your Preferred Aarti Slot</h1>
+    </section>
+    <section class="form-shell">
+      <form id="bookingForm" class="premium-form">
+        <label>Name<input type="text" id="name" required placeholder="Enter full name"></label>
+        <label>Mobile Number<input type="tel" id="mobile" required pattern="[0-9]{10}" maxlength="10" placeholder="10 digit mobile number"></label>
+        <fieldset class="preference-group">
+          <legend>Preferred Option 1</legend>
+          <div class="form-row">
+            <label>Date
+              <input type="date" id="option1Date" min="2026-09-14" max="2026-09-25" required>
+            </label>
+            <label>Time Slot
+              <select id="option1Time" required>
+                <option value="">Select time slot</option>
+                <option>10:00 AM</option>
+                <option>8:00 PM</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+        <fieldset class="preference-group">
+          <legend>Preferred Option 2</legend>
+          <div class="form-row">
+            <label>Date
+              <input type="date" id="option2Date" min="2026-09-14" max="2026-09-25" required>
+            </label>
+            <label>Time Slot
+              <select id="option2Time" required>
+                <option value="">Select time slot</option>
+                <option>10:00 AM</option>
+                <option>8:00 PM</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+        <button class="btn btn-primary" type="submit">Submit Booking</button>
+        <p id="bookingMessage" class="form-message" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© 2026 MAHESH GANESH MANDAL, Selu.</p></footer>
+  <script src="script.js"></script>
+  <script type="module" src="firebase-booking.js"></script>
+</body>
+</html>

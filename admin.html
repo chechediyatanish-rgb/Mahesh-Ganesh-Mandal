@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | MAHESH GANESH MANDAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a class="brand" href="index.html"><img class="logo-mark" src="assets/mahesh-ganesh-mandal-logo.webp" alt="Mahesh Ganesh Mandal logo"><span><strong>MAHESH GANESH MANDAL</strong><small>Selu</small></span></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">Menu</button>
+      <div class="nav-links">
+        <a href="index.html">Home</a><a href="about.html">About Mandal</a><a href="committee.html">Committee Members</a><a href="events.html">Latest Events</a><a href="booking.html">Aarti Booking</a><a href="status.html">Booking Status</a><a href="admin.html" class="active">Admin Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="page-title">
+      <p class="eyebrow">Admin Login</p>
+      <h1>Committee Booking Dashboard</h1>
+    </section>
+    <section class="form-shell" id="loginPanel">
+      <form id="adminLogin" class="premium-form">
+        <label>Admin Name
+          <select id="adminName" required>
+            <option value="">Select admin</option>
+            <option>Tanish Chechediya</option>
+            <option>Satyam Chechediya</option>
+          </select>
+        </label>
+        <label>Password<input type="password" id="adminPassword" required placeholder="Enter password"></label>
+        <button class="btn btn-primary" type="submit">Login</button>
+        <p class="form-message">Admin access for Tanish Chechediya and Satyam Chechediya.</p>
+      </form>
+    </section>
+    <section id="adminPanel" class="admin-panel hidden">
+      <div class="admin-head">
+        <h2>All Aarti Bookings</h2>
+        <button class="btn btn-secondary" id="logoutAdmin" type="button">Logout</button>
+      </div>
+      <p id="adminMessage" class="form-message" role="status"></p>
+      <div id="adminBookings" class="booking-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>© 2026 MAHESH GANESH MANDAL, Selu.</p></footer>
+  <script src="script.js"></script>
+  <script type="module" src="firebase-admin.js"></script>
+</body>
+</html>
