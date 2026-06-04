@@ -73,11 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!adminLogin || !adminPanel || !adminBookings || !adminMessage) return;
 
-  let db = null;
-  if (hasFirebaseConfig()) {
-    const app = initializeApp(firebaseConfig);
-    db = getFirestore(app);
-  }
+if (!hasFirebaseConfig()) {
+  adminMessage.textContent = "Firebase config is missing.";
+  return;
+}
 
   async function updateRequestStatus(requestId, status, card) {
     if (!db) return;
