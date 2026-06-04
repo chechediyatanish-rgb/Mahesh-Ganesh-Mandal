@@ -7,7 +7,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
-  updateDoc
+  updateDoc,
   addDoc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
