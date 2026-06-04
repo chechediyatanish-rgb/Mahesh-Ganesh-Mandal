@@ -14,7 +14,7 @@ import { firebaseConfig } from "./firebase-config.js";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const adminPassword = "tanish#satyam777";
-const admins = ["Tanish Chechediya", "Satyam Chechediya"];
+const admins = ["Tani", "Satyam Chechediya"];
 
 function hasFirebaseConfig() {
   return Object.values(firebaseConfig).every((value) => value && !value.startsWith("YOUR_"));
