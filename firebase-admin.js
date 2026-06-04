@@ -175,16 +175,3 @@ if (addAnnouncementBtn) {
     }
   });
   
-
-
-
-      
-
-      document.querySelector("#announcementText").value = "";
-      alert("Announcement Saved Successfully");
-    } catch (error) {
-      console.error(error);
-      alert("Error saving announcement");
-    }
-  });
-}
