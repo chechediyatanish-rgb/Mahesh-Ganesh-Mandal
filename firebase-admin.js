@@ -178,7 +178,7 @@ if (addAnnouncementBtn) {
 
 
 
-      });
+      
 
       document.querySelector("#announcementText").value = "";
       alert("Announcement Saved Successfully");
