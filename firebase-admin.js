@@ -11,9 +11,10 @@ import {
   addDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
-
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const adminPassword = "tanish#satyam777";
-const admins = ["Tanish Chechediya", "Satyam Chechediya"];
+const admins = ["Satyam Chechediya", "Tanish Chechediya"];
 
 function hasFirebaseConfig() {
   return Object.values(firebaseConfig).every((value) => value && !value.startsWith("YOUR_"));
