@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     adminMessage.textContent = "";
     adminLogin.reset();
   });
-});
+
 const addAnnouncementBtn = document.querySelector("#addAnnouncement");
 
 if (addAnnouncementBtn) {
