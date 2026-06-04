@@ -174,5 +174,40 @@ if (addAnnouncementBtn) {
       alert("Error saving announcement");
     }
   });
+  const saveWinnerBtn = document.querySelector("#saveWinner");
+
+if (saveWinnerBtn) {
+  saveWinnerBtn.addEventListener("click", async () => {
+    const gameName = document.querySelector("#gameName").value.trim();
+    const firstRank = document.querySelector("#firstRank").value.trim();
+    const secondRank = document.querySelector("#secondRank").value.trim();
+    const thirdRank = document.querySelector("#thirdRank").value.trim();
+
+    if (!gameName) {
+      alert("Enter Game Name");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "game_winners"), {
+        gameName,
+        firstRank,
+        secondRank,
+        thirdRank,
+        createdAt: serverTimestamp()
+      });
+
+      document.querySelector("#gameName").value = "";
+      document.querySelector("#firstRank").value = "";
+      document.querySelector("#secondRank").value = "";
+      document.querySelector("#thirdRank").value = "";
+
+      alert("Winner Saved Successfully");
+    } catch (error) {
+      console.error(error);
+      alert("Error Saving Winner");
+    }
+  });
+}
 }
 });
