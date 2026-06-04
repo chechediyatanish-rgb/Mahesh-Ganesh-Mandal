@@ -175,7 +175,7 @@ if (addAnnouncementBtn) {
     }
   });
   
-}const addAnnouncementBtn = document.querySelector("#addAnnouncement");
+
 
 if (addAnnouncementBtn) {
   addAnnouncementBtn.addEventListener("click", async () => {
