@@ -174,3 +174,4 @@ if (addAnnouncementBtn) {
       alert("Error saving announcement");
     }
   });
+}
