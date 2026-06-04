@@ -177,19 +177,7 @@ if (addAnnouncementBtn) {
   
 
 
-if (addAnnouncementBtn) {
-  addAnnouncementBtn.addEventListener("click", async () => {
-    const text = document.querySelector("#announcementText").value.trim();
 
-    if (!text) {
-      alert("Enter announcement first");
-      return;
-    }
-
-    try {
-      await addDoc(collection(db, "announcements"), {
-        text: text,
-        createdAt: serverTimestamp()
       });
 
       document.querySelector("#announcementText").value = "";
