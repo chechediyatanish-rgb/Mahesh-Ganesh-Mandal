@@ -129,13 +129,18 @@ if (!hasFirebaseConfig()) {
   adminLogin.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const selectedAdmin = document.querySelector("#adminName").value;
-    const password = document.querySelector("#adminPassword").value;
+    const username = document.querySelector("#adminName").value.trim();
+const password = document.querySelector("#adminPassword").value;
 
-    if (!admins.includes(selectedAdmin) || password !== adminPassword) {
-      alert("Invalid admin login details.");
-      return;
-    }
+if (
+  !(
+    (username === "tanish" && password === "tanish942666") ||
+    (username === "satyam" && password === "satyam@927777")
+  )
+) {
+  alert("Invalid admin login details.");
+  return;
+}
 
     loginPanel.classList.add("hidden");
     adminPanel.classList.remove("hidden");
