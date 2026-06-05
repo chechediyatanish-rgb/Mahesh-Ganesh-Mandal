@@ -4,7 +4,9 @@ import {
   collection,
   getDocs,
   query,
-  orderBy
+  orderBy,
+  deleteDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 import { firebaseConfig } from "./firebase-config.js";
@@ -31,13 +33,24 @@ async function loadAnnouncements() {
 
     container.innerHTML = "";
 
-    snapshot.forEach((doc) => {
-      const data = doc.data();
+    snapshot.forEach((announcementDoc) => {
+     const data = announcementDoc.data();
 
       const item = document.createElement("article");
       item.className = "event-item";
-      item.innerHTML = `<p>${data.text}</p>`;
+      item.innerHTML = `
+  <p>${data.text}</p>
+  <button class="deleteAnnouncement">Delete</button>
+`;
+item.querySelector(".deleteAnnouncement")
+.addEventListener("click", async () => {
 
+  await deleteDoc(
+    doc(db, "announcements", announcementDoc.id)
+  );
+
+  loadAnnouncements();
+});
       container.appendChild(item);
     });
   } catch (error) {
