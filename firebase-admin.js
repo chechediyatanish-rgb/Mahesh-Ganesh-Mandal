@@ -9,6 +9,8 @@ import {
   serverTimestamp,
   updateDoc,
   addDoc,
+  deleteDoc,
+getDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 const app = initializeApp(firebaseConfig);
@@ -144,10 +146,13 @@ if (
 
     loginPanel.classList.add("hidden");
     adminPanel.classList.remove("hidden");
+    window.isAdminLoggedIn = true;
     await loadRequests();
   });
 
   logoutAdmin.addEventListener("click", () => {
+window.isAdminLoggedIn = false;
+    
     adminPanel.classList.add("hidden");
     loginPanel.classList.remove("hidden");
     adminBookings.innerHTML = "";
@@ -179,6 +184,7 @@ if (addAnnouncementBtn) {
       alert("Error saving announcement");
     }
   });
+  window.isAdminLoggedIn = false;
   const saveWinnerBtn = document.querySelector("#saveWinner");
 
 if (saveWinnerBtn) {
