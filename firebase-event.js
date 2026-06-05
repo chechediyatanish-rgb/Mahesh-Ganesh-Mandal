@@ -38,22 +38,11 @@ async function loadAnnouncements() {
 
       const item = document.createElement("article");
       item.className = "event-item";
-      item.innerHTML = `
-  <p>${data.text}</p>
-  <button class="deleteAnnouncement">Delete</button>
-`;
-item.querySelector(".deleteAnnouncement")
-.addEventListener("click", async () => {
+      item.innerHTML =`<p>${data.text}</p>`;
 
-  await deleteDoc(
-    doc(db, "announcements", announcementDoc.id)
-  );
-
-  loadAnnouncements();
-});
       container.appendChild(item);
-    });
-  } catch (error) {
+});
+       } catch (error) {
     console.error(error);
   }
 }
