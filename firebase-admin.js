@@ -147,6 +147,7 @@ if (
     loginPanel.classList.add("hidden");
     adminPanel.classList.remove("hidden");
     window.isAdminLoggedIn = true;
+    loadAnnouncements();
     await loadRequests();
   });
 
@@ -179,12 +180,13 @@ if (addAnnouncementBtn) {
 
       document.querySelector("#announcementText").value = "";
       alert("Announcement Saved Successfully");
+      loadAnnouncements();
     } catch (error) {
       console.error(error);
       alert("Error saving announcement");
-    }
+       }
   });
-  window.isAdminLoggedIn = false;
+ 
   const saveWinnerBtn = document.querySelector("#saveWinner");
 
 if (saveWinnerBtn) {
@@ -222,3 +224,42 @@ if (saveWinnerBtn) {
 }
 }
 });
+async function loadAnnouncements() {
+  const announcementList = document.querySelector("#announcementList");
+
+  if (!announcementList) return;
+
+  announcementList.innerHTML = "";
+
+  try {
+    const snapshot = await getDocs(collection(db, "announcements"));
+
+    snapshot.forEach((docSnap) => {
+      const data = docSnap.data();
+
+      const div = document.createElement("div");
+
+      div.innerHTML = `
+        <p>${data.text}</p>
+        <button class="deleteAnnouncement" data-id="${docSnap.id}">
+          Delete
+        </button>
+      `;
+
+      announcementList.appendChild(div);
+    });
+
+    document.querySelectorAll(".deleteAnnouncement").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const id = btn.dataset.id;
+
+        await deleteDoc(doc(db, "announcements", id));
+
+        loadAnnouncements();
+      });
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
