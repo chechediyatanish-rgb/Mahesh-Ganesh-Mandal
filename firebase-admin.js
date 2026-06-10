@@ -303,6 +303,17 @@ data-third="${data.thirdRank}">
         });
 
         document.querySelectorAll(".deleteWinner").forEach((btn) => {
+          document.querySelectorAll(".editWinner").forEach((btn) => {
+    btn.addEventListener("click", () => {
+
+        document.querySelector("#gameName").value = btn.dataset.game;
+        document.querySelector("#firstRank").value = btn.dataset.first;
+        document.querySelector("#secondRank").value = btn.dataset.second;
+        document.querySelector("#thirdRank").value = btn.dataset.third;
+
+        alert("Winner data loaded. Edit and click Save Winner.");
+    });
+});
             btn.addEventListener("click", async () => {
                 const id = btn.dataset.id;
 
