@@ -311,19 +311,7 @@ data-third="${data.thirdRank}">
                 loadWinnersAdmin();
             });
         });
-    document.querySelectorAll(".editWinner").forEach((btn) => {
-  btn.addEventListener("click", () => {
-
-    document.querySelector("#gameName").value = btn.dataset.game;
-    document.querySelector("#firstRank").value = btn.dataset.first;
-    document.querySelector("#secondRank").value = btn.dataset.second;
-    document.querySelector("#thirdRank").value = btn.dataset.third;
-
-    alert("Winner data loaded. Edit and click Save Winner.");
-
-  });
-});
-
+  
     } catch (error) {
         console.error(error);
     }
