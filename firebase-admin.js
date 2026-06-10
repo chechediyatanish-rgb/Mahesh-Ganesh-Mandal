@@ -186,7 +186,7 @@ if (addAnnouncementBtn) {
       alert("Error saving announcement");
        }
   });
- 
+ let editingWinnerId = null;
   const saveWinnerBtn = document.querySelector("#saveWinner");
 
 if (saveWinnerBtn) {
@@ -200,15 +200,63 @@ if (saveWinnerBtn) {
       alert("Enter Game Name");
       return;
     }
+    try{
 
-    try {
-      await addDoc(collection(db, "game_winners"), {
+  if (editingWinnerId) {
+
+    await updateDoc(
+      doc(db, "game_winners", editingWinnerId),
+      {
         gameName,
         firstRank,
         secondRank,
-        thirdRank,
-        createdAt: serverTimestamp()
-      });
+        thirdRank
+      }
+    );
+
+    editingWinnerId = null;
+
+  } else {
+
+    await addDoc(collection(db, "game_winners"), {
+      gameName,
+      firstRank,
+      secondRank,
+      thirdRank,
+      createdAt: serverTimestamp()
+    });
+
+  }
+
+  document.querySelector("#gameName").value = "";
+  document.querySelector("#firstRank").value = "";
+  document.querySelector("#secondRank").value = "";
+  document.querySelector("#thirdRank").value = "";
+
+  alert("Winner Saved Successfully");
+  loadWinnersAdmin();
+
+} catch (error) {
+  console.error(error);
+  alert("Error Saving Winner");
+}
+
+
+  editingWinnerId = null;
+
+} else {
+
+  await addDoc(collection(db, "game_winners"), {
+    gameName,
+    firstRank,
+    secondRank,
+    thirdRank,
+    createdAt: serverTimestamp()
+  });
+
+}
+    try {
+     
 
       document.querySelector("#gameName").value = "";
       document.querySelector("#firstRank").value = "";
@@ -310,7 +358,7 @@ data-third="${data.thirdRank}">
         document.querySelector("#firstRank").value = btn.dataset.first;
         document.querySelector("#secondRank").value = btn.dataset.second;
         document.querySelector("#thirdRank").value = btn.dataset.third;
-
+editingWinnerId = btn.dataset.id;
         alert("Winner data loaded. Edit and click Save Winner.");
     });
 });
