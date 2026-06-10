@@ -284,10 +284,19 @@ async function loadWinnersAdmin() {
                 <p>🥇 ${data.firstRank}</p>
                 <p>🥈 ${data.secondRank}</p>
                 <p>🥉 ${data.thirdRank}</p>
+<button class="editWinner"
+data-id="${docSnap.id}"
+data-game="${data.gameName}"
+data-first="${data.firstRank}"
+data-second="${data.secondRank}"
+data-third="${data.thirdRank}">
+    Edit Winner
+</button>
 
-                <button class="deleteWinner" data-id="${docSnap.id}">
-                    Delete Winner
-                </button>
+<button class="deleteWinner" data-id="${docSnap.id}">
+    Delete Winner
+</button>
+               
             `;
 
             winnerList.appendChild(div);
@@ -302,7 +311,22 @@ async function loadWinnersAdmin() {
                 loadWinnersAdmin();
             });
         });
+document.querySelectorAll(".editWinner").forEach((btn) => {
+  btn.addEventListener("click", () => {
 
+    document.querySelector("#gameName").value = btn.dataset.game;
+    document.querySelector("#firstRank").value = btn.dataset.first;
+    document.querySelector("#secondRank").value = btn.dataset.second;
+    document.querySelector("#thirdRank").value = btn.dataset.third;
+
+    deleteDoc(doc(db, "game_winners", btn.dataset.id));
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+});
     } catch (error) {
         console.error(error);
     }
