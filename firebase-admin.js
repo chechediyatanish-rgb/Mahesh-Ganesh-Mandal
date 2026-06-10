@@ -216,6 +216,7 @@ if (saveWinnerBtn) {
       document.querySelector("#thirdRank").value = "";
 
       alert("Winner Saved Successfully");
+      loadWinnersAdmin();
     } catch (error) {
       console.error(error);
       alert("Error Saving Winner");
@@ -262,4 +263,47 @@ async function loadAnnouncements() {
   } catch (error) {
     console.error(error);
   }
+}
+async function loadWinnersAdmin() {
+    const winnerList = document.querySelector("#winnerList");
+
+    if (!winnerList) return;
+
+    winnerList.innerHTML = "";
+
+    try {
+        const snapshot = await getDocs(collection(db, "game_winners"));
+
+        snapshot.forEach((docSnap) => {
+            const data = docSnap.data();
+
+            const div = document.createElement("div");
+
+            div.innerHTML = `
+                <h4>${data.gameName}</h4>
+                <p>🥇 ${data.firstRank}</p>
+                <p>🥈 ${data.secondRank}</p>
+                <p>🥉 ${data.thirdRank}</p>
+
+                <button class="deleteWinner" data-id="${docSnap.id}">
+                    Delete Winner
+                </button>
+            `;
+
+            winnerList.appendChild(div);
+        });
+
+        document.querySelectorAll(".deleteWinner").forEach((btn) => {
+            btn.addEventListener("click", async () => {
+                const id = btn.dataset.id;
+
+                await deleteDoc(doc(db, "game_winners", id));
+
+                loadWinnersAdmin();
+            });
+        });
+
+    } catch (error) {
+        console.error(error);
+    }
 }
