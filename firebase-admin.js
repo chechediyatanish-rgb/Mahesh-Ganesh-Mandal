@@ -347,4 +347,3 @@ document.querySelectorAll(".deleteWinner").forEach((btn) => {
 catch (error) {
     console.error(error);
 }
-}
