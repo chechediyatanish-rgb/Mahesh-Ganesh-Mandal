@@ -345,3 +345,4 @@ document.querySelectorAll(".deleteWinner").forEach((btn) => {
         console.error(error);
     }
 }
+});
