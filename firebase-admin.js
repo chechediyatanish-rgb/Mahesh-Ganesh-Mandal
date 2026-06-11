@@ -343,4 +343,4 @@ document.querySelectorAll(".deleteWinner").forEach((btn) => {
         loadWinnersAdmin();
     });
 });
-    }
+    
