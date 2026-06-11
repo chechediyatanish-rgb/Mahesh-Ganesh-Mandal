@@ -331,15 +331,15 @@ data-third="${data.thirdRank}">
 editingWinnerId = btn.dataset.id;
         alert("Winner data loaded. Edit and click Save Winner.");
     });
+document.querySelectorAll(".deleteWinner").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+        const id = btn.dataset.id;
+
+        await deleteDoc(doc(db, "game_winners", id));
+
+        loadWinnersAdmin();
+    });
 });
-            btn.addEventListener("click", async () => {
-                const id = btn.dataset.id;
-
-                await deleteDoc(doc(db, "game_winners", id));
-
-                loadWinnersAdmin();
-            });
-        });
   
     } catch (error) {
         console.error(error);
