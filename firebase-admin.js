@@ -247,8 +247,6 @@ if (saveWinnerBtn) {
       alert("Error Saving Winner");
     }
   });
-}
-}
 });
 async function loadAnnouncements() {
   const announcementList = document.querySelector("#announcementList");
