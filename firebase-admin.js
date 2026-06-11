@@ -242,30 +242,7 @@ if (saveWinnerBtn) {
 }
 
 
-  editingWinnerId = null;
 
-} else {
-
-  await addDoc(collection(db, "game_winners"), {
-    gameName,
-    firstRank,
-    secondRank,
-    thirdRank,
-    createdAt: serverTimestamp()
-  });
-
-}
-    try {
-     
-
-      document.querySelector("#gameName").value = "";
-      document.querySelector("#firstRank").value = "";
-      document.querySelector("#secondRank").value = "";
-      document.querySelector("#thirdRank").value = "";
-
-      alert("Winner Saved Successfully");
-      loadWinnersAdmin();
-    } catch (error) {
       console.error(error);
       alert("Error Saving Winner");
     }
