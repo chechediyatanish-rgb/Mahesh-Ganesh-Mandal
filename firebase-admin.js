@@ -240,13 +240,6 @@ if (saveWinnerBtn) {
   console.error(error);
   alert("Error Saving Winner");
 }
-
-
-
-      console.error(error);
-      alert("Error Saving Winner");
-    }
-  });
 });
 async function loadAnnouncements() {
   const announcementList = document.querySelector("#announcementList");
