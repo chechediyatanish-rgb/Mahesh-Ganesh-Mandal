@@ -320,15 +320,26 @@ data-third="${data.thirdRank}">
             winnerList.appendChild(div);
         });
 
-        document.querySelectorAll(".deleteWinner").forEach((btn) => {
-          document.querySelectorAll(".editWinner").forEach((btn) => {
+       document.querySelectorAll(".editWinner").forEach((btn) => {
     btn.addEventListener("click", () => {
 
         document.querySelector("#gameName").value = btn.dataset.game;
         document.querySelector("#firstRank").value = btn.dataset.first;
         document.querySelector("#secondRank").value = btn.dataset.second;
         document.querySelector("#thirdRank").value = btn.dataset.third;
-editingWinnerId = btn.dataset.id;
+
+        editingWinnerId = btn.dataset.id;
+
         alert("Winner data loaded. Edit and click Save Winner.");
     });
+});
 
+document.querySelectorAll(".deleteWinner").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+        const id = btn.dataset.id;
+
+        await deleteDoc(doc(db, "game_winners", id));
+
+        loadWinnersAdmin();
+    });
+});
